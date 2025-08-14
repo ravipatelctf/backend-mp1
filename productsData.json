@@ -1,0 +1,57 @@
+[
+  {
+    "productName": "Classic Cotton T-Shirt",
+    "productPrice": 499,
+    "discountPercentage": 10,
+    "productImageUrl": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab",
+    "productImageAlt": "Classic Cotton T-Shirt in white",
+    "productRating": 4.5,
+    "productQuantity": 50,
+    "productSize": "M",
+    "productDescription": "A soft, breathable cotton T-shirt perfect for daily wear. Available in multiple colors."
+  },
+  {
+    "productName": "Sports Running Shoes",
+    "productPrice": 2499,
+    "discountPercentage": 20,
+    "productImageUrl": "https://images.unsplash.com/photo-1606813902914-00236b34b1f7",
+    "productImageAlt": "Black and white sports running shoes",
+    "productRating": 4.7,
+    "productQuantity": 30,
+    "productSize": "XL",
+    "productDescription": "Lightweight and comfortable running shoes designed for durability and performance."
+  },
+  {
+    "productName": "Leather Office Bag",
+    "productPrice": 3499,
+    "discountPercentage": 15,
+    "productImageUrl": "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f",
+    "productImageAlt": "Brown leather office bag",
+    "productRating": 4.3,
+    "productQuantity": 20,
+    "productSize": "XXl",
+    "productDescription": "Premium leather office bag with spacious compartments and sleek design."
+  },
+  {
+    "productName": "Wireless Bluetooth Headphones",
+    "productPrice": 1999,
+    "discountPercentage": 25,
+    "productImageUrl": "https://images.unsplash.com/photo-1518443815200-06d6d3b6f87b",
+    "productImageAlt": "Over-ear wireless bluetooth headphones",
+    "productRating": 4.6,
+    "productQuantity": 40,
+    "productSize": "S",
+    "productDescription": "Noise-cancelling over-ear headphones with crystal clear sound and long battery life."
+  },
+  {
+    "productName": "Stainless Steel Water Bottle",
+    "productPrice": 699,
+    "discountPercentage": 5,
+    "productImageUrl": "https://images.unsplash.com/photo-1585397339118-98237e84c36c",
+    "productImageAlt": "Reusable stainless steel water bottle",
+    "productRating": 4.8,
+    "productQuantity": 100,
+    "productSize": "M",
+    "productDescription": "Eco-friendly stainless steel water bottle with double-wall insulation to keep drinks hot or cold."
+  }
+]

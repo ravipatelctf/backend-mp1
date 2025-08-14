@@ -56,14 +56,13 @@ async function readAllProducts() {
     }
 }
 
-app.get("/products", async (req, res) => {
+app.get("/api/products", async (req, res) => {
     try {
         const allProducts = await readAllProducts();
         if (allProducts) {
             res
                 .status(200)
                 .send(allProducts)
-                .json({message: "Data fetched successfully."});
         } else {
             res
                 .status(404)
@@ -78,8 +77,32 @@ app.get("/products", async (req, res) => {
 
 // --------------------------------------------------------------------------
 
-app.get("/", (req, res) => {
-    res.send("Hello, This is backend of Major Project 1");
+async function readProductById(productId) {
+    try {
+        const product = await Product.findById(productId);
+        return product;
+    } catch (error) {
+        throw error;
+    }
+}
+
+app.get("/api/products/:productId", async (req, res) => {
+    try {
+        const product = await readProductById(req.params.productId);
+        if (product) {
+            res
+                .status(200)
+                .send(product)
+        } else {
+            res
+                .status(404)
+                .json({error: "data not found!"});
+        }
+    } catch (error) {
+        res
+            .status(500)
+            .json({error: "Failed to load data!"});
+    }
 })
 
 // --------------------------------------------------------------------------

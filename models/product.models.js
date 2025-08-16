@@ -1,36 +1,39 @@
 const mongooose = require("mongoose");
 
 const productSchema = new mongooose.Schema({
-    productName: {
+    name: {
         type: String,
     },
-    productPrice: {
+    price: {
         type: Number,
     },
     discountPercentage: {
         type: Number
     },
-    productImageUrl: {
+    imageUrl: {
         type: String
     },
-    productImageAlt: {
+    imageAlt: {
         type: String
     },
-    productRating: {
+    rating: {
         type: Number,
         min: 0,
         max: 5,
         default: 0
     },
-    productQuantity: {
+    quantity: {
         type: Number
     },
-    productSize: {
+    size: {
         type: String,
         enum: ["S", "M", "XL", "XXl"]
     },
-    productDescription: {
+    description: {
         type: String
+    },
+    isAddedToCart: {
+        type: Boolean
     }
 },
 {

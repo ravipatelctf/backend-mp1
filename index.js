@@ -26,15 +26,16 @@ initializeDatabase();
 //     try {
 //         for (const productData of productsData) {
 //             const newProduct = new Product({    
-//                 productName: productData.productName,
-//                 productPrice: productData.productPrice,
+//                 name: productData.name,
+//                 price: productData.price,
 //                 discountPercentage: productData.discountPercentage,
-//                 productImageUrl: productData.productImageUrl,
-//                 productImageAlt: productData.productImageAlt,
-//                 productRating: productData.productRating,
-//                 productQuantity: productData.productQuantity,
-//                 productSize: productData.productSize,
-//                 productDescription: productData.productDescription
+//                 imageUrl: productData.imageUrl,
+//                 imageAlt: productData.imageAlt,
+//                 rating: productData.rating,
+//                 quantity: productData.quantity,
+//                 size: productData.size,
+//                 description: productData.description,
+//                 isAddedToCart: productData.isAddedToCart,
 //             });
 //             const savedData = await newProduct.save();
 //         }
@@ -47,7 +48,7 @@ initializeDatabase();
 // seedData();
 // --------------------------------------------------------------------------
 
-async function readAllProducts() {
+async function readAll() {
     try {
         const allProducts = await Product.find();
         return allProducts;
@@ -58,7 +59,7 @@ async function readAllProducts() {
 
 app.get("/api/products", async (req, res) => {
     try {
-        const allProducts = await readAllProducts();
+        const allProducts = await readAll();
         if (allProducts) {
             res
                 .status(200)
@@ -77,7 +78,7 @@ app.get("/api/products", async (req, res) => {
 
 // --------------------------------------------------------------------------
 
-async function readProductById(productId) {
+async function readById(productId) {
     try {
         const product = await Product.findById(productId);
         return product;
@@ -88,7 +89,7 @@ async function readProductById(productId) {
 
 app.get("/api/products/:productId", async (req, res) => {
     try {
-        const product = await readProductById(req.params.productId);
+        const product = await readById(req.params.productId);
         if (product) {
             res
                 .status(200)
@@ -102,6 +103,36 @@ app.get("/api/products/:productId", async (req, res) => {
         res
             .status(500)
             .json({error: "Failed to load data!"});
+    }
+})
+
+// --------------------------------------------------------------------------
+
+async function readByIdAndUpdate(productId, dataToUpdate) {
+    try {
+        const updatedProduct = await Product.findByIdAndUpdate(productId, dataToUpdate, {new: true});
+        return updatedProduct        
+    } catch (error) {
+        throw error
+    }
+}
+
+app.post("/api/products/:productId", async (req, res) => {
+    try {
+        const updatedProduct = await readByIdAndUpdate(req.params.productId, req.body);
+        if(updatedProduct) {
+            res
+                .status(200)
+                .json({message: "data updated successfully.", updatedData: updatedProduct});
+        } else {
+            res
+                .status(404)
+                .json({error: "data not found!"});
+        }
+    } catch (error) {
+        res
+            .status(500)
+            .json({error: "Failed to update data!"});
     }
 })
 

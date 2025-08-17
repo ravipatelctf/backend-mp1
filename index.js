@@ -36,6 +36,7 @@ initializeDatabase();
 //                 size: productData.size,
 //                 description: productData.description,
 //                 isAddedToCart: productData.isAddedToCart,
+//                 isAddedToWishlist: productData.isAddedToWishlist,
 //             });
 //             const savedData = await newProduct.save();
 //         }

@@ -6,10 +6,11 @@
     "imageUrl": "https://images.unsplash.com/photo-1553591589-2e96ef7eca65",
     "imageAlt": "Classic Cotton T-Shirt in white",
     "rating": 4.5,
-    "quantity": 50,
+    "quantity": 1,
     "size": "M",
     "description": "A soft, breathable cotton T-shirt perfect for daily wear. Available in multiple colors.",
-    "isAddedToCart": false
+    "isAddedToCart": false,
+    "isAddedToWishlist": false
   },
   {
     "name": "Sports Running Shoes",
@@ -18,10 +19,11 @@
     "imageUrl": "https://images.unsplash.com/photo-1553591589-2e96ef7eca65",
     "imageAlt": "Black and white sports running shoes",
     "rating": 4.7,
-    "quantity": 30,
+    "quantity": 1,
     "size": "XL",
     "description": "Lightweight and comfortable running shoes designed for durability and performance.",
-    "isAddedToCart": false
+    "isAddedToCart": false,
+    "isAddedToWishlist": false
   },
   {
     "name": "Leather Office Bag",
@@ -30,10 +32,11 @@
     "imageUrl": "https://images.unsplash.com/photo-1553591589-2e96ef7eca65",
     "imageAlt": "Brown leather office bag",
     "rating": 4.3,
-    "quantity": 20,
+    "quantity": 1,
     "size": "XXl",
     "description": "Premium leather office bag with spacious compartments and sleek design.",
-    "isAddedToCart": false
+    "isAddedToCart": false,
+    "isAddedToWishlist": false
   },
   {
     "name": "Wireless Bluetooth Headphones",
@@ -42,10 +45,11 @@
     "imageUrl": "https://images.unsplash.com/photo-1553591589-2e96ef7eca65",
     "imageAlt": "Over-ear wireless bluetooth headphones",
     "rating": 4.6,
-    "quantity": 40,
+    "quantity": 1,
     "size": "S",
     "description": "Noise-cancelling over-ear headphones with crystal clear sound and long battery life.",
-    "isAddedToCart": false
+    "isAddedToCart": false,
+    "isAddedToWishlist": false
   },
   {
     "name": "Stainless Steel Water Bottle",
@@ -54,9 +58,10 @@
     "imageUrl": "https://images.unsplash.com/photo-1553591589-2e96ef7eca65",
     "imageAlt": "Reusable stainless steel water bottle",
     "rating": 4.8,
-    "quantity": 100,
+    "quantity": 1,
     "size": "M",
     "description": "Eco-friendly stainless steel water bottle with double-wall insulation to keep drinks hot or cold.",
-    "isAddedToCart": false
+    "isAddedToCart": false,
+    "isAddedToWishlist": false
   }
 ]

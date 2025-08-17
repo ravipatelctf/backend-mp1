@@ -34,6 +34,9 @@ const productSchema = new mongooose.Schema({
     },
     isAddedToCart: {
         type: Boolean
+    },
+    isAddedToWishlist: {
+        type: Boolean
     }
 },
 {

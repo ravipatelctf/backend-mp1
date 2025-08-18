@@ -1,7 +1,7 @@
 const {initializeDatabase} = require("./db/db.connect");
 const Product = require("./models/product.models");
 
-// const fs = require("fs");
+
 
 const express = require("express");
 const app = express();
@@ -17,11 +17,14 @@ app.use(cors(corsOptions));
 
 initializeDatabase();
 
+
+
+// --------------------------------------------------------------------------
+// const fs = require("fs");
+
 // const jsonData = fs.readFileSync("productsData.json", "utf-8");
 // const productsData = JSON.parse(jsonData);
 
-// --------------------------------------------------------------------------
-// function to seed database
 // async function seedData() {
 //     try {
 //         for (const productData of productsData) {
@@ -37,6 +40,7 @@ initializeDatabase();
 //                 description: productData.description,
 //                 isAddedToCart: productData.isAddedToCart,
 //                 isAddedToWishlist: productData.isAddedToWishlist,
+//                 category: productData.category
 //             });
 //             const savedData = await newProduct.save();
 //         }
@@ -45,7 +49,6 @@ initializeDatabase();
 //         throw error;
 //     }
 // }
-
 // seedData();
 // --------------------------------------------------------------------------
 

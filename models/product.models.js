@@ -37,6 +37,10 @@ const productSchema = new mongooose.Schema({
     },
     isAddedToWishlist: {
         type: Boolean
+    },
+    category: {
+        type: String,
+        enum: ["Men", "Women", "Kids"]
     }
 },
 {

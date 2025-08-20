@@ -61,9 +61,9 @@ initializeDatabase();
 //             emailId: "test@user1.example",
 //             phoneNumber: 1234567890,
 //             addresses: [
-//                 {id: 1, value: "Test address 1"},
-//                 {id: 2, value: "Test address 2"},
-//                 {id: 3, value: "Test address 3"},
+//                 {address: "Test address 1"},
+//                 {address: "Test address 2"},
+//                 {address: "Test address 3"},
 //             ],
 //         });
 //         await newUser.save();
@@ -79,7 +79,7 @@ initializeDatabase();
 // get user by id
 async function readUserById() {
     try {
-        const user = await User.findById("68a584ec89c6fac0e885e21b").populate("orders");
+        const user = await User.findById("68a592d50fd78b8fbcf05476").populate("orders");
         return user;
     } catch (error) {
         throw error;
@@ -105,7 +105,79 @@ app.get("/api/user", async (req, res) => {
     }
 })
 // --------------------------------------------------------------------------
-// find usera and populate it's orders field with products ordered
+// add new address to addresses field of user data
+async function readUserAndAddNewAddress(newAddressObject) {
+    try {
+        const user = await User.findOne();
+        if (!user) {
+            throw new Error("User Not Found!");
+        }
+        user.addresses.push(newAddressObject);
+        const updatedUser = await user.save();
+        return updatedUser
+    } catch (error) {
+        throw error;
+    }
+}
+
+app.post("/api/user/addresses", async (req, res) => {
+    try {
+        const updatedUser = await readUserAndAddNewAddress(req.body);
+        if (!updatedUser) {
+            res
+                .status(404)
+                .json({error: "User Not Found!"});
+        } else {
+            res
+                .status(201)
+                .json({message: "Address added successfully.", user: updatedUser});
+        }
+    } catch (error) {
+        res
+            .status(500)
+            .json({error: "Failed to update address!"});
+    }
+})
+
+// --------------------------------------------------------------------------
+// delete an address from addresses field of user data
+
+async function readUserAndDeleteAnAddressFromAddressesField(addressId) {
+    try {
+        const user = await User.findOne();
+        if (!user) {
+            throw new Error("User Not Found")
+        }
+        user.addresses = user.addresses.filter(element => element._id.toString() !== addressId);
+        const updatedUser = await user.save();
+        return updatedUser;
+    } catch (error) {
+        throw error;
+    }
+}
+
+app.delete("/api/user/addresses/:addressId", async (req, res) => {
+    try {
+        const addressId = req.params.addressId;
+        const updatedData = await readUserAndDeleteAnAddressFromAddressesField(addressId);
+        if (!updatedData) {
+            res
+                .status(404)
+                .json({error: "Address Not Found!"});
+        } 
+        res
+            .status(200)
+            .json({message: "Address deleted successfully.", user: updatedData})
+       
+    } catch (error) {
+        res
+            .status(500)
+            .json({error: "Failed to delete address!"})
+    }
+})
+
+// --------------------------------------------------------------------------
+// find user and populate it's orders field with products ordered
 
 async function readUserAndPopulateOrders(productId) {
     try {
@@ -138,34 +210,44 @@ app.post("/api/user/orders", async (req, res) => {
 })
 
 // --------------------------------------------------------------------------
-// update user address by id
-async function readUserByIdAndUpdateAddress(dataToUpdate) {
+// update an address in addresses field of user
+async function readUserAndUpdateAddressById(addressId, updatedAddress) {
     try {
-        const {addresses} = dataToUpdate;
-        const updatedUser = await User.findByIdAndUpdate("68a35f768fc5c3d122846f6b", {addresses}, {new: true}).populate("orders");
-        return updatedUser;
+        const user = await User.findOne();
+        if (!user) {
+            throw new Error("User not found!");
+        }
+
+        const address = user.addresses.id(addressId);
+        if (!address) {
+            throw new Error("Address Not Found");
+        }
+        address.address = updatedAddress;
+        await user.save();
+
+        return user;
     } catch (error) {
-        throw error;
+        
     }
 }
 
-app.post("/api/user", async (req, res) => {
+app.post("/api/user/addresses/:addressId", async (req, res) => {
     try {
-        const updatedUser = await readUserByIdAndUpdateAddress(req.body);
+        const {address} = req.body;
+        const updatedUser = await readUserAndUpdateAddressById(req.params.addressId, address);
         if (updatedUser) {
             res
                 .status(200)
-                .send(updatedUser)
+                .json({message: "Address updated successfully.", user: updatedUser});
         } else {
             res
                 .status(404)
-                .json({error: "user not found"})
+                .json({error: "Address not Found!"})
         }
-        
     } catch (error) {
         res
             .status(500)
-            .json({error: "Failed to update data"})
+            .json({error: "Failed to update address!"});
     }
 })
 

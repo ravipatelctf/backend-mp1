@@ -13,10 +13,11 @@ const userSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    addresses: [{
-        type: Object,
-        required: true,
-    }],
+    addresses: [
+        {
+            address: String,
+        }
+    ],
     orders: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product"

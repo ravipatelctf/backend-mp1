@@ -13,8 +13,8 @@ const userSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    address: [{
-        type: String,
+    addresses: [{
+        type: Object,
         required: true,
     }],
     orders: [{

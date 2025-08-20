@@ -60,7 +60,11 @@ initializeDatabase();
 //             name: "Test User 1",
 //             emailId: "test@user1.example",
 //             phoneNumber: 1234567890,
-//             address: ["Test address 1", "Test address 2", "Test address 3"],
+//             addresses: [
+//                 {id: 1, value: "Test address 1"},
+//                 {id: 2, value: "Test address 2"},
+//                 {id: 3, value: "Test address 3"},
+//             ],
 //         });
 //         await newUser.save();
 //         console.log("User DB seeded with a test user successfully.")
@@ -137,8 +141,8 @@ app.post("/api/user/orders", async (req, res) => {
 // update user address by id
 async function readUserByIdAndUpdateAddress(dataToUpdate) {
     try {
-        const {address} = dataToUpdate;
-        const updatedUser = await User.findByIdAndUpdate("68a35f768fc5c3d122846f6b", {address}, {new: true}).populate("orders");
+        const {addresses} = dataToUpdate;
+        const updatedUser = await User.findByIdAndUpdate("68a35f768fc5c3d122846f6b", {addresses}, {new: true}).populate("orders");
         return updatedUser;
     } catch (error) {
         throw error;

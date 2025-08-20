@@ -79,7 +79,7 @@ initializeDatabase();
 // get user by id
 async function readUserById() {
     try {
-        const user = await User.findById("68a35f768fc5c3d122846f6b").populate("orders");
+        const user = await User.findById("68a584ec89c6fac0e885e21b").populate("orders");
         return user;
     } catch (error) {
         throw error;

@@ -135,8 +135,11 @@ initializeDatabase();
 // }
 async function createNewOrder(newOrderObject) {
     try {
+        const user = await User.findOne()
         const newOrder = new Order(newOrderObject);
         const savedOrder = await newOrder.save();
+        user.orders.push(savedOrder._id);
+        await user.save();
         return savedOrder;
     } catch (error) {
         throw error;
@@ -145,6 +148,7 @@ async function createNewOrder(newOrderObject) {
 
 app.post("/api/orders", async (req, res) => {
     try {
+        
         const savedOrder = await createNewOrder(req.body);
         if (savedOrder) {
             res
@@ -167,10 +171,16 @@ app.post("/api/orders", async (req, res) => {
 // --------------------------------------------------------------------------
 // user routes
 // --------------------------------------------------------------------------
-// get user by id
+// get user and populate orders
 async function readUserById() {
     try {
-        const user = await User.findOne().populate("orders");
+        const user = await User.findOne().populate({
+            path: "orders",
+            populate: {
+                path: "products.product",
+                model: "Product"
+            }
+        });
         return user;
     } catch (error) {
         throw error;

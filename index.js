@@ -1,7 +1,7 @@
 const {initializeDatabase} = require("./db/db.connect");
 const Product = require("./models/product.models");
 const User = require("./models/user.models");
-
+const Order = require("./models/order.models");
 
 const express = require("express");
 const app = express();
@@ -44,7 +44,7 @@ initializeDatabase();
 //             });
 //             const savedData = await newProduct.save();
 //         }
-//         console.log("Database seeded with products data successfully.")
+//         console.log("Database seeded with products data successfully.",)
 //     } catch (error) {
 //         throw error;
 //     }
@@ -52,34 +52,125 @@ initializeDatabase();
 // seedData();
 // --------------------------------------------------------------------------
 
+// // ----------------------------------------------------
+// // Seed User
+// // ----------------------------------------------------
+// async function seedUser() {
+//     const newUser = new User({
+//         name: "Test User 1",
+//         emailId: "user1@test.example",
+//         phoneNumber: 1234567890,
+//         addresses: [
+//             { address: "Test Address 1" },
+//             { address: "Test Address 2" },
+//         ],
+//         orders: [],
+//     });
+
+//     const savedUser = await newUser.save();
+//     console.log("User db seeded with one user data successfully:", savedUser);
+//     return savedUser;
+// }
+
+// // ----------------------------------------------------
+// // Seed Order
+// // ----------------------------------------------------
+// async function seedOrder(user) {
+
+//     const product = await Product.findOne();
+
+//     if (!product) {
+//         console.log("No product found in db")
+//         return;
+//     }
+
+//     const newOrder = new Order({
+//         products: [
+//             {
+//                 product: product._id,
+//                 quantity: 2,
+//                 size: "M"
+//             },
+//         ],
+//         totalPrice: 1000,
+//         discount: 100,
+//         deliveryCharge: 50,
+//         address: "Test Address 1",
+//     });
+
+//     const savedOrder = await newOrder.save();
+//     user.orders.push(savedOrder._id);
+//     await user.save();
+
+//     console.log("order seeded successfully:", savedOrder);
+// }
+
+// // ----------------------------------------------------
+// // Run Seeder for User and Order 
+// // ----------------------------------------------------
+// async function seed() {
+//     const user = await seedUser();
+//     await seedOrder(user);
+// }
+
+// seed()
+
+// --------------------------------------------------------------------------
+// order routes
+// --------------------------------------------------------------------------
+// add new order in orders collection
+// order object
+// {
+//     products: [
+//         {
+//             product: product._id,
+//             quantity: 2,
+//             size: "M"
+//         }
+//     ],
+//     totalPrice: totalPrice,
+//     discount: discount,
+//     deliveryCharge: deliveryCharge,
+//     address: address,
+// }
+async function createNewOrder(newOrderObject) {
+    try {
+        const newOrder = new Order(newOrderObject);
+        const savedOrder = await newOrder.save();
+        return savedOrder;
+    } catch (error) {
+        throw error;
+    }
+}
+
+app.post("/api/orders", async (req, res) => {
+    try {
+        const savedOrder = await createNewOrder(req.body);
+        if (savedOrder) {
+            res
+                .status(200)
+                .send(savedOrder)
+        } else {
+            res
+                .status(404)
+                .json({error: "product or user not found!"})
+        }
+    } catch (error) {
+        res
+            .status(500)
+            .json({error: "Failed to add new order!"})
+    }
+})
+
 // --------------------------------------------------------------------------
 
-// async function seedUsers() {
-//     try {
-//         const newUser = new User({
-//             name: "Test User 1",
-//             emailId: "test@user1.example",
-//             phoneNumber: 1234567890,
-//             addresses: [
-//                 {address: "Test address 1"},
-//                 {address: "Test address 2"},
-//                 {address: "Test address 3"},
-//             ],
-//         });
-//         await newUser.save();
-//         console.log("User DB seeded with a test user successfully.")
-//     } catch (error) {
-//         throw error;
-//     }
-// }
-// seedUsers()
 // --------------------------------------------------------------------------
 // user routes
 // --------------------------------------------------------------------------
 // get user by id
 async function readUserById() {
     try {
-        const user = await User.findById("68a592d50fd78b8fbcf05476").populate("orders");
+        const user = await User.findOne().populate("orders");
         return user;
     } catch (error) {
         throw error;
@@ -173,39 +264,6 @@ app.delete("/api/user/addresses/:addressId", async (req, res) => {
         res
             .status(500)
             .json({error: "Failed to delete address!"})
-    }
-})
-
-// --------------------------------------------------------------------------
-// find user and populate it's orders field with products ordered
-
-async function readUserAndPopulateOrders(productId) {
-    try {
-        const user = await User.findOne();
-        if (!user) {
-            throw new Error("User Not Found!")
-        }
-
-        user.orders.push(productId);
-        const updatedUser = await user.save();
-
-        return await updatedUser.populate("orders");
-    } catch (error) {
-        throw error;
-    }
-}
-
-app.post("/api/user/orders", async (req, res) => {
-    try {
-        const {productId} = req.body;
-        const updatedUser = await readUserAndPopulateOrders(productId);
-        res
-            .status(200)
-            .send(updatedUser)
-    } catch (error) {
-        res
-            .status(500)
-            .json({error: "Failed to update data"})
     }
 })
 

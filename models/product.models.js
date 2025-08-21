@@ -27,7 +27,7 @@ const productSchema = new mongooose.Schema({
     },
     size: {
         type: String,
-        enum: ["S", "M", "XL", "XXl"]
+        enum: ["S", "M", "XL", "XXL"]
     },
     description: {
         type: String
